@@ -1,0 +1,87 @@
+/*
+Ejercicio 4: Hacer un programa que resuelva operaciones logicas con n <= 4
+variables, ejm: A&B(C|D)^~A
+*/
+#include <iostream>
+using namespace std;
+
+/*
+bool NOT(bool &result[], bool a[]){
+  int size = sizeof(result)/sizeof(result[0]);
+  for(int i = 0; i < size; i++)
+    result[i] = !a[i];
+}
+bool OR(bool &result[], bool a[], bool b[]){
+  int size = sizeof(result)/sizeof(result[0]);
+  for(int i = 0; i < size; i++)
+    result[i] = a[i] || b[i];
+}
+bool AND(bool &result[], bool a[], bool b[]){
+  int size = sizeof(result)/sizeof(result[0]);
+  for(int i = 0; i < size; i++)
+    result[i] = a[i] && b[i];
+}
+bool XOR(bool &result[], bool a[], bool b[]){
+  int size = sizeof(result)/sizeof(result[0]);
+  for(int i = 0; i < size; i++)
+    result[i] = a[i] xor b[i];
+}
+*/
+int main(){
+  string operacion;
+  int vars[] = {0,0,0,0} , vars_size = sizeof(vars)/sizeof(vars[0]),num_vars=0;
+  cin >> operacion;
+  for(int i = 0; i < operacion.size(); i++){ 
+    if(operacion[i] == 'A')
+      vars[0]++;
+    if(operacion[i] == 'B')
+      vars[1]++;
+    if(operacion[i] == 'C')
+      vars[2]++;
+    if(operacion[i] == 'D')
+      vars[3]++;
+  }
+  /*Aqui cuento el numero de variables que hay*/
+  for(int i = 0; i < vars_size; i++)
+    (vars[i] != 0)?num_vars++:num_vars=num_vars;
+  bool mat[num_vars][1 << num_vars];
+  bool result[1 << num_vars];
+  int aux_1;
+  for(int i = 0; i < 1 << num_vars; i++){
+    aux_1 = i;
+    result[i] = 0;
+    for(int j = 0; j < num_vars; j++){
+      mat[j][i] = aux_1 % 2;
+      aux_1 /= 2;
+    }
+  }
+
+  for(int i = 0; i < operacion.size(); i++){ 
+    if(operacion[i] == 'A'){
+      cout << "A: ";
+      for(int i = 0; i < 1 << num_vars; i++)
+	cout << mat[0][i] << " ";
+      cout << endl;
+    }
+    if(operacion[i] == 'B'){
+      cout << "B: ";
+      for(int i = 0; i < 1 << num_vars; i++)
+	cout << mat[1][i] << " ";
+      cout << endl;
+    }
+    if(operacion[i] == 'C'){
+      cout << "C: ";
+      for(int i = 0; i < 1 << num_vars; i++)
+	cout << mat[2][i] << " ";
+      cout << endl;
+    }
+    if(operacion[i] == 'D'){
+      cout << "D: ";
+      for(int i = 0; i < 1 << num_vars; i++)
+	cout << mat[3][i] << " ";
+      cout << endl;   
+    }
+  }
+  
+  return 0;
+}
